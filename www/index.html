@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<title></title>
+
+
+	<!-- compiled css output -->
+	<link href="css/ionic.app.css" rel="stylesheet">
+
+	<!-- ionic/angularjs js -->
+
+	<script src="lib/jquery/dist/jquery.min.js"></script>
+	<script src="lib/ionic/js/ionic.bundle.js"></script>
+	<script src="lib/pouchdb/dist/pouchdb.js"></script>
+	<script src="lib/visionmedia-debug/dist/debug.js"></script>
+
+	<!-- cordova script (this will be a 404 during development) -->
+	<script src="cordova.js"></script>
+
+	<!-- your app's js -->
+	<script src="js/boot.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/services.js"></script>
+</head>
+
+<body>
+	<!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+	<!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+	<ion-nav-view></ion-nav-view>
+	<script id="shoppingList.html" type="text/ng-template">
+		<ion-view>
+			<div ng-switch="mode">
+				<div class="bar bar-header animate" ng-switch-when="normal">
+					<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+					<div class="h1 title">{{title()}}</div>
+					<button class="button button-icon icon plus-icon" ng-click="showModal()"></button>
+				</div>
+				<div class="bar bar-header animate" ng-switch-when="edit">
+					<button class="button button-icon icon back-icon" ng-click="stopEdit()"></button>
+					<div class="h1 title">{{title()}}</div>
+					<div class="buttons">
+						<button class="button button-icon icon delete-icon" ng-click="deleteSelectedItems()"></button>
+						<button class="button button-icon icon check-icon" ng-click="completeSelectedItems()"></button>
+					</div>
+				</div>
+				<ion-content class="has-header" has-bouncing="false">
+					<ion-list type="card" can-swipe="true" show-delete="mode === 'edit'">
+						<div class="item item-divider">Recent Items</div>
+						<ion-item ng-repeat="item in recentItems" on-hold="onHold(item)" class="ng-class:{'selected':mode === 'edit'  && isSelected(item)};">
+							<span">{{item.name}}</span>
+							<ion-option-button class="button button-icon icon delete-icon" ng-click="deleteItem(item,$index)"></ion-option-button>
+							<ion-option-button class="button button-icon icon check-icon" ng-click="completeItem(item,$index)"></ion-option-button>
+							<ion-delete-button class="select-item-icon " ng-click="selectItem(item)">
+						</ion-item>
+						<div class="item item-body" ng-if="!recentItems || recentItems.length == 0">
+							You should start adding items..
+						</div>
+					</ion-list>
+					<ion-list type="card" ng-hide="mode === 'edit'">
+						<div class="item item-divider">Completed Items</div>
+						<ion-item ng-repeat="item in completedItems">
+							<span style="text-decoration: line-through;">{{item.name}}</span>
+						</ion-item>
+						<div class="item item-body" ng-if="!completedItems || completedItems.length == 0">
+							You should start complete some items..
+						</div>
+					</ion-list>
+				</ion-content>
+		</ion-view>
+	</script>
+	<script id="new-item-modal.html" type="text/ng-template">
+		<ion-modal-view>
+			<ion-header-bar class="bar-secondary">
+				<h1 class="title">Add Item</h1>
+				<button class="button button-clear button-calm" ng-click="closeModal()">{{modal.closeText}}</button>
+			</ion-header-bar>
+			<ion-content>
+				<form ng-submit="create(modal.input)">
+					<div class="list">
+						<label class="item item-input">
+							<input id="modal-input" type="text" placeholder="Tomatoes? A sponge maybe" ng-model="modal.input">
+						</label>
+					</div>
+					<div class="padding">
+						<button type="submit" class="button button-block button-calm">{{modal.buttonText}}</button>
+					</div>
+				</form>
+			</ion-content>
+		</ion-modal-view>
+	</script>
+</body>
+
+</html>
