@@ -21,10 +21,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-.popup-body{
-  overflow:auto;
-}
-
 //default
 .more-icon{
   @extend .ion-android-more-horizontal

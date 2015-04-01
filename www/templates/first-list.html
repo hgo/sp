@@ -1,0 +1,18 @@
+<ion-view>
+	<ion-header-bar class="bar-secondary">
+		<h1 class="title">Add Your First List</h1>
+	</ion-header-bar>
+	<ion-content>
+		<form ng-submit="create(input,selectedLabelColor)">
+			<div class="list">
+				<label class="item item-input">
+					<input id="list-modal-input" type="text" placeholder="Movies List? even Todos" ng-model="input">
+				</label>
+			</div>
+			<div lselect trigger="lselect.enter" colors="['assertive','positive','calm','balanced','energized','royal','dark']"></div>
+			<div class="padding">
+				<button type="submit" ng-disabled="input.length < 3 || !selectedLabelColor" class="button button-block button-calm">Add List</button>
+			</div>
+		</form>
+	</ion-content>
+</ion-view>

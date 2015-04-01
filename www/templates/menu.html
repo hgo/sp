@@ -7,11 +7,18 @@
 
 	<!-- Left menu -->
 	<ion-side-menu side="left" expose-aside-when="large">
-		<div class="bar bar-header bar-calm">
+		<div class="bar bar-header bar-stable">
 			<h1 class="title">Menu</h1>
 		</div>
 		<ion-content class="has-header" has-bouncing="false">
-			<a menu-close href="javascript:void();" class="item">Home</a>
+			<div class="list">
+				<a class="item item-divider item-icon-right" ng-click="showModal()" menu-close>Lists
+					<i class="icon plus-icon"></i>
+				</a>
+
+				<a class="item item-icon-right {{list.color ? list.color: ''}}" ng-repeat="list in lists" href="#/a/list/{{list._id}}" menu-close swipe-to-remove>{{list.name}} 
+					<span class="badge {{list.color ? 'badge-'+list.color : 'badge-stable'}} ">{{countMap[list._id]}}</span></a>
+			</div>
 		</ion-content>
 
 	</ion-side-menu>

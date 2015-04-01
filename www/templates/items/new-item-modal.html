@@ -1,0 +1,26 @@
+<ion-modal-view>
+	<ion-header-bar class="bar-secondary">
+		<h1 class="title">Add Item</h1>
+		<button class="button button-clear {{list.color ? 'button-'+list.color : 'button-stable'}}" ng-click="closeModal()">{{modal.closeText}}</button>
+	</ion-header-bar>
+	<ion-content>
+		<form ng-submit="create(modal.input,modal.priority)">
+			<div class="list">
+				<label class="item item-input">
+					<input id="modal-input" type="text" placeholder="Item name" ng-model="modal.input">
+				</label>
+				<label class="item item-input item-select">
+					<div class="input-label">
+						Priority
+					</div>
+					<select ng-model="modal.priority" ng-options="v as v for v in [1,2,3]">
+						<option value="">Choose</option>
+					</select>
+				</label>
+			</div>
+			<div class="padding">
+				<button type="submit" ng-disabled="!modal.priority || modal.input.length < 3" class="button button-block {{list.color ? 'button-'+list.color : 'button-stable'}}">{{modal.buttonText}}</button>
+			</div>
+		</form>
+	</ion-content>
+</ion-modal-view>
