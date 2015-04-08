@@ -1,5 +1,5 @@
 {
-  "name": "my-shopping-list",
+  "name": "Lists",
   "app_id": "",
   "gulpStartupTasks": [
     "sass",

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.myshoppinglist901767" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>my-shopping-list</name>
+<widget id="me.guven.lists" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Lists</name>
   <description>
-        An Ionic Framework and Cordova project.
+        Create lists for human-kind
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="guvenozyurt@gmail.com" href="http://hgo.me">
+      Guven Ozyurt
     </author>
   <content src="index.html"/>
   <access origin="*"/>
