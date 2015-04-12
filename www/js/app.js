@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.directives'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.directives', 'monospaced.elastic'])
 
 .run(function ($ionicPlatform, $rootScope, $state, $ionicConfig) {
 		$ionicConfig.views.maxCache(0);
@@ -226,6 +226,50 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 							initialModal();
 						});
 
+
+
+						//EDIT ITEM 
+						var editItemModal;
+
+						function showEditModal(item) {
+							editItemModal.scope.item = item;
+							editItemModal.scope.original_item = angular.copy(item);
+							editItemModal.show();
+						}
+
+						var editScope = $scope.$new();
+						$ionicModal.fromTemplateUrl('templates/items/edit-item-modal.html', {
+							scope: editScope,
+							focusFirstInput: true,
+						}).then(function (modal) {
+							editItemModal = modal;
+						});
+
+						editScope.edit = function (original_item, item) {
+							if (angular.equals(original_item, item)) {
+								editItemModal.hide();
+							} else {
+								editItemModal.hide();
+								Items.edit(item).then(function (rev) {
+									if (original_item.priority !== item.priority) {
+										refreshList();
+									} else {
+										item._rev = rev;
+									}
+								});
+							}
+						}
+						editScope.delete = function (item) {
+							editItemModal.hide();
+							editScope.$parent.deleteItem(item);
+						}
+						editScope.complete = function (item) {
+							editItemModal.hide();
+							editScope.$parent.completeItem(item);
+						}
+
+						//END EDIT ITEM 
+
 						$scope.$on('$ionicView.enter', function () {
 							if (!$scope.popover) {
 								var popoverScope = $scope.$new();
@@ -246,6 +290,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 						$scope.closePopover = function () {
 							$scope.popover.hide();
 						};
+						$scope.clearCompletedItems = function () {
+							$scope.closePopover();
+							var promises = [];
+							angular.forEach($scope.completedItems, function (value, key) {
+								console.log(value);
+								promises.push(Items.delete(value));
+							});
+							var allQ = $q.all(promises);
+							allQ.then(function () {
+								console.log('allQ clear completed Itens');
+								refreshList();
+							});
+						}
 
 						$scope.deleteList = function () {
 							$scope.closePopover();
@@ -332,13 +389,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 							});
 						};
 						$scope.selectItem = function (item) {
+							if ($scope.mode !== 'edit') {
+								showEditModal(item);
+								return;
+							}
+							console.log('select item');
 							if ($scope.selectedItems[item._id]) {
+								console.log('select item - removed');
 								delete $scope.selectedItems[item._id];
 							} else {
+								console.log('select item - added');
 								$scope.selectedItems[item._id] = item;
 							}
 						};
 						$scope.onHold = function (item) {
+							if ($scope.mode === 'edit') {
+								return;
+							}
 							$scope.mode = $scope.mode !== 'edit' ? 'edit' : 'normal';
 							$scope.selectItem(item);
 						};

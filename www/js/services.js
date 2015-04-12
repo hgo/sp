@@ -273,6 +273,17 @@ angular.module('starter.services', [])
 					});
 				return defer.promise;
 			},
+			edit: function (item) {
+				var defer = $q.defer();
+				db.put(item)
+					.then(function (result) {
+						$rootScope.$broadcast('item:changed');
+						defer.resolve(result.rev); //revision degismeli, daha sonraki updatelerde conflict cikmasin diye
+					}).catch(function (err) {
+						defer.reject(err);
+					});
+				return defer.promise;
+			},
 			create: function (name, priority, list) {
 				var defer = $q.defer();
 				var item = {

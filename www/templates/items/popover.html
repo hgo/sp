@@ -1,11 +1,9 @@
 <ion-popover-view>
-	<ion-header-bar>
-		<h1 class="title">{{name}} Actions</h1>
-	</ion-header-bar>
 	<ion-content>
 		<div class="list">
-			<a class="item" ng-click="deleteList()">Delete</a>
-			<a class="item" ng-click="editList()">Edit</a>
+			<a class="item" ng-click="deleteList()">Delete List</a>
+			<a class="item" ng-click="editList()">Edit {{name}}</a>
+			<a class="item" ng-click="clearCompletedItems()">Clear Completed Items</a>
 		</div>
 	</ion-content>
 </ion-popover-view>

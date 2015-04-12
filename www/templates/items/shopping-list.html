@@ -7,7 +7,6 @@
 				<button class="button button-icon icon plus-icon" ng-click="showModal()"></button>
 				<button class="button button-icon icon more-icon" ng-click="showPopover($event)"></button>
 			</div>
-
 		</div>
 		<div class="bar bar-header animate" ng-switch-when="edit">
 			<button class="button button-icon icon back-icon" ng-click="stopEdit()"></button>
@@ -18,17 +17,14 @@
 			</div>
 		</div>
 		<ion-content class="has-header" has-bouncing="false">
-			<ion-list type="card" can-swipe="true" show-delete="mode === 'edit'">
+			<ion-list type="card">
 				<div class="item item-divider">Recent Items</div>
-				<ion-item ng-repeat="item in recentItems" on-hold="onHold(item)" class="ng-class:{'selected':mode === 'edit'  && isSelected(item)};">
-					{{item.name}}
-					<span class="item-note">
-								P{{item.priority}}
-					</span>
-					<ion-option-button class="button button-icon icon delete-icon" ng-click="deleteItem(item,$index)"></ion-option-button>
-					<ion-option-button class="button button-icon icon check-icon" ng-click="completeItem(item,$index)"></ion-option-button>
-					<ion-delete-button class="select-item-icon" ng-click="selectItem(item)">
-				</ion-item>
+				<a ng-repeat="item in recentItems" on-hold="onHold(item)" class="item ng-class:{'selected':mode === 'edit'  && isSelected(item),'item-icon-left':mode === 'edit','item-icon-right':mode !== 'edit'};" ng-click="selectItem(item)">
+					<i ng-if="mode === 'edit'" class="icon select-item-icon"></i>{{item.name}}
+					<i ng-if="mode !== 'edit'" class="icon ng-class:{'ion-ios-arrow-up':item.priority === 1,'ion-ios-minus-empty':item.priority === 2,'ion-ios-arrow-down':item.priority === 3};"></i>
+					<p ng-if="item.notes"><pre style="color: #666;font-size: 14px;margin-bottom: 2px;">{{item.notes}}</pre>
+					</p>
+				</a>
 				<div class="item item-body" ng-if="!recentItems || recentItems.length==0">
 					You should start adding items..
 				</div>

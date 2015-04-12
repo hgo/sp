@@ -1,0 +1,30 @@
+<ion-modal-view>
+	<div class="bar bar-header animate">
+		<div class="buttons">
+			<button class="button button-icon icon delete-icon" ng-click="delete(item)"></button>
+			<button class="button button-icon icon check-icon" ng-click="complete(item)"></button>
+		</div>
+		<div class="h1 title">Edit Item</div>
+		<button class="button" ng-click="edit(original_item,item)">Save</button>
+	</div>
+	<ion-content class="has-header">
+		<div class="list">
+			<label class="item item-input item-stacked-input">
+				<span class="input-label">Item name:</span>
+				<input id="modal-input" type="text" placeholder="Item name" ng-model="item.name">
+			</label>
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Priority:
+				</div>
+				<select ng-model="item.priority" ng-options="v as v for v in [1,2,3]">
+					<option value="">Choose</option>
+				</select>
+			</label>
+			<label class="item item-input  item-stacked-label">
+				<span class="input-label">Additional Notes:</span>
+				<textarea msd-elastic="\n" placeholder="Additional Notes" ng-model="item.notes" rows="3"></textarea>
+			</label>
+		</div>
+	</ion-content>
+</ion-modal-view>
